@@ -3,9 +3,16 @@ import React, { useEffect, useState } from 'react';
 
 import myImage from '../images/loader.gif';
 
-const Employee = () => {
-    const apiEndPoint = "https://onlinetestapi.gerasim.in/api/TeamSync/";
+import * as myConstant from '../constant/constant';
 
+import {getAllEmployee, createEmp, getEMployeById} from '../service/employeeService';
+
+
+const Employee = () => {
+     
+    const apiEndPoint = process.env.REACT_APP_API_END_POINT;
+    const APPvERSION = process.env.REACT_APP_VERSION;
+    debugger;
     let [employeeList, setEmployeeLIst] = useState([]);
     let [employeeObj, setEmployeeObj] = useState({
         "empId": 0,
@@ -55,23 +62,31 @@ const Employee = () => {
     }
 
     const getEmployeeList = async () => {
-         
-        const result = await axios.get(apiEndPoint + 'GetAllEmployee');
-        setIsLoader(false)
-        setEmployeeLIst(result.data.data)
+         debugger
+         getAllEmployee().then((res)=>{
+            debugger
+            setIsLoader(false)
+            setEmployeeLIst(res.data)
+         })
+       
     }
 
     const saveEmployee = async () => {
         setisSaveLoader(true);
         try {
-            const result = await axios.post(apiEndPoint + 'CreateEmployee', employeeObj);
-            setisSaveLoader(false);
-            if (result.data.result) {
-                alert('Employee Created');
-                getEmployeeList();
-            } else {
-                alert(result.data.message)
-            }
+            debugger;
+            createEmp(employeeObj).then((res)=>{
+                debugger;
+                setisSaveLoader(false);
+                if (res.result) {
+                    alert('Employee Created');
+                    getEmployeeList();
+                } else {
+                    alert(res.message)
+                }
+            })
+             
+           
         } catch (error) {
             setisSaveLoader(false);
             debugger;
@@ -83,8 +98,11 @@ const Employee = () => {
     const onEdit = async (id) => {
 
         try {
-            const result = await axios.get(apiEndPoint + 'GetEmployeeByEmpId?empid=' + id);
-            setEmployeeObj(result.data.data)
+            getEMployeById(id).then((res)=>{
+                setEmployeeObj(res.data)
+            })
+            
+            
         } catch (error) {
                 alert('Error Occuored');
         }

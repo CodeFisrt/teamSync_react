@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
+import {getAllEmployee} from '../service/employeeService';
+
 const Attendance = () => {
     const apiEndPoint = "https://onlinetestapi.gerasim.in/api/TeamSync/";
     let [attendanceList,setAttendanceList] = useState([])
@@ -24,8 +27,11 @@ const Attendance = () => {
         getAllAttendance();
     },[])
     const getEmployeeList = async () => { 
-        const result = await axios.get(apiEndPoint + 'GetAllEmployee'); 
-        setemployeeList(result.data.data)
+        
+        getAllEmployee().then((res)=>{
+            setemployeeList(res.data)
+        })
+       
     }
 
     const getAllAttendance = async () => {  
