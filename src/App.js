@@ -8,6 +8,7 @@ import SalaryAdvance from './components/SalaryAdvance';
 import SalaryVoucher from './components/SalaryVoucher';
 import Leaves from './components/Leaves';
 import Header from './components/Header';
+import Enquiry from './components/Enquiry';
 function App() {
   return (
     <div className="App">
@@ -21,7 +22,8 @@ function App() {
           <Route path='/Salary-Advance' element={<SalaryAdvance />} ></Route>
           <Route path='/Salary-Voucher' element={<SalaryVoucher />} ></Route>
           <Route path='/Leaves' element={<Leaves />} ></Route>
-        </Routes>
+          <Route path='/Enquiry' element={<Enquiry />} ></Route>
+        </Routes> 
 
       </BrowserRouter>
     </div>
