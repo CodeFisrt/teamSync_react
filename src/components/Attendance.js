@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 
 import {getAllEmployee} from '../service/employeeService';
+import{ Appcontext } from '../App'
 
 const Attendance = () => {
+    const contextObj =  useContext(Appcontext)
     const apiEndPoint = "https://onlinetestapi.gerasim.in/api/TeamSync/";
     let [attendanceList,setAttendanceList] = useState([])
     let [attendanceObj,setattendanceObj] = useState({
@@ -57,6 +59,7 @@ const Attendance = () => {
 
     return (
         <div>
+            <h5>Version: {contextObj.appVersion}</h5>
             <div className='row'>
                 <div className='col-8'>
                     <div className='card'>

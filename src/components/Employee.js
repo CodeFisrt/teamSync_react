@@ -1,19 +1,20 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext  } from 'react';
 
 import myImage from '../images/loader.gif';
 
 import * as myConstant from '../constant/constant';
 
 import {getAllEmployee, createEmp, getEMployeById} from '../service/employeeService';
+import{ Appcontext } from '../App'
 
 
-const Employee = () => {
-     
+const Employee = () => { 
+    const contextObj =  useContext(Appcontext)
     const apiEndPoint = process.env.REACT_APP_API_END_POINT;
     const APPvERSION = process.env.REACT_APP_VERSION;
-    debugger;
-    let [employeeList, setEmployeeLIst] = useState([]);
+    debugger; 
+    let [employeeList, setEmployeeLIst] = useState([]); 
     let [employeeObj, setEmployeeObj] = useState({
         "empId": 0,
         "empName": "",
@@ -36,8 +37,7 @@ const Employee = () => {
 
     useEffect(() => {
         getEmployeeList();
-    }, [])
-
+    }, []) 
     const reset =() => {
         setEmployeeObj({
             "empId": 0,
@@ -59,8 +59,7 @@ const Employee = () => {
     }
     const changeFormValue = (event, key) => {
         setEmployeeObj(prevObj => ({ ...prevObj, [key]: event.target.value }))
-    }
-
+    } 
     const getEmployeeList = async () => {
          debugger
          getAllEmployee().then((res)=>{
@@ -69,8 +68,7 @@ const Employee = () => {
             setEmployeeLIst(res.data)
          })
        
-    }
-
+    } 
     const saveEmployee = async () => {
         setisSaveLoader(true);
         try {
@@ -93,8 +91,7 @@ const Employee = () => {
             alert(error.code)
         }
         
-    }
-
+    } 
     const onEdit = async (id) => {
 
         try {
@@ -108,8 +105,7 @@ const Employee = () => {
         }
 
         
-    }
-
+    } 
     const updateEmployee = async () => {
         const result = await axios.post(apiEndPoint + 'UpdateEmployee', employeeObj);
         if (result.data.result) {
@@ -118,8 +114,7 @@ const Employee = () => {
         } else {
             alert(result.data.message)
         }
-    }
-
+    } 
     const onDelete = async (id) => {
         const isDelte = window.confirm('Are You Sure want to Delete');
         if (isDelte) {
@@ -135,6 +130,7 @@ const Employee = () => {
     }
     return (
         <div>
+            <p>Version: {contextObj.appVersion} , CreateBy: {contextObj.craetedBy}</p>
             <div className='row'>
                 <div className='col-8'>
                     <div className='card'>
